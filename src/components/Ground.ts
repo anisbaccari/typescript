@@ -84,10 +84,24 @@ export class Ground {
     return this.height;
   }
 
-  public getBoundaries(): void {
+  public displayBoundaries(): void {
     console.log(
       "z_min:", this.z_min, "z_max:", this.z_max,
       "\nx_min:", this.x_min, "x_max:", this.x_max
     );
+  }
+  public getXBoundaries():number[]
+  {
+    return [this.x_min,this.x_max];
+  }
+  public getZBoundaries():number[]
+  {
+    return [this.z_min,this.z_max];
+  }
+
+  public display(): void
+  {
+    console.log("Ground :",this.groundMesh?.position );
+    this.displayBoundaries();
   }
 }

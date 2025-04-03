@@ -8,7 +8,10 @@ export class Ball {
         this.mesh.material = material;
         this.ballSpeed = new BABYLON.Vector3(0.3, 0, 0.1);
     }
+    display() {
+        console.log("Ball :", this.mesh.position);
+    }
     update() {
-        this.mesh.position.addInPlace(this.ballSpeed);
+        //  this.mesh.position.addInPlace(this.ballSpeed)
     }
 }

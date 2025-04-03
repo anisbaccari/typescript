@@ -9,6 +9,10 @@ export class Paddle {
         this.moveDownL = false;
         this.moveUpR = false;
         this.moveDownR = false;
+        this.z_min = 0;
+        this.z_max = 0;
+        this.x_min = 0;
+        this.x_max = 0;
         this.paddleSpeed = 1.5;
         this.init(scene, 50);
     }
@@ -23,8 +27,8 @@ export class Paddle {
             new BABYLON.Color3.Red(),
         ];
         const positions = this.getPositions(g_width);
-        this.leftPaddle = this.createPaddle("Left Paddle", positions.left, scene);
-        this.rightPaddle = this.createPaddle("Right Paddle", positions.right, scene);
+        this.leftPaddle = this === null || this === void 0 ? void 0 : this.createPaddle("Left Paddle", positions.left, scene);
+        this.rightPaddle = this === null || this === void 0 ? void 0 : this.createPaddle("Right Paddle", positions.right, scene);
         this.setupInputControls();
     }
     getPositions(g_width) {
@@ -45,35 +49,50 @@ export class Paddle {
         return paddle;
     }
     updatePaddlesMovement() {
-        if (this.moveUpL && this.leftPaddle.position.y < 15) {
+        if (this.moveUpL && this.leftPaddle.position.z < this.z_max - this.depth / 2) {
             this.leftPaddle.position.z += this.paddleSpeed;
         }
-        if (this.moveDownL && this.leftPaddle.position.y > -15) {
+        if (this.moveDownL && this.leftPaddle.position.z > this.z_min + this.depth / 2) {
             this.leftPaddle.position.z -= this.paddleSpeed;
         }
-        if (this.moveUpR && this.rightPaddle.position.y < 15) {
+        if (this.moveUpR && this.rightPaddle.position.z < this.z_max - this.depth / 2) {
             this.rightPaddle.position.z += this.paddleSpeed;
         }
-        if (this.moveDownR && this.rightPaddle.position.y > -15) {
+        if (this.moveDownR && this.rightPaddle.position.z > this.z_min + this.depth / 2) {
             this.rightPaddle.position.z -= this.paddleSpeed;
         }
+    }
+    /// min - max
+    setBoundaries(x_bound, z_bound) {
+        this.z_min = z_bound[0];
+        this.z_max = z_bound[1];
+        this.x_min = x_bound[0];
+        this.x_max = x_bound[1];
+        console.log("boundarie:", this.z_min);
+    }
+    display() {
+        console.log("RightPaddle : ", this === null || this === void 0 ? void 0 : this.rightPaddle.position);
+        console.log("LeftPaddle : ", this === null || this === void 0 ? void 0 : this.leftPaddle.position);
+        console.log("Paddle boundaries : z_max", this.z_max, " z_min", this.z_min);
+        console.log("Paddle boundaries : x_max", this.x_max, " x_min", this.x_min);
+        console.log("Paddle depth :", this.depth);
     }
     setupInputControls() {
         // Key Press (Start Movement)
         window.addEventListener('keydown', (e) => {
             switch (e.key) {
-                case "w":
-                case "W":
+                case "ArrowUp":
                     this.moveUpR = true;
                     break;
-                case "s":
-                case "S":
+                case "ArrowDown":
                     this.moveDownR = true;
                     break;
-                case "ArrowUp":
+                case "W":
+                case "w":
                     this.moveUpL = true;
                     break;
-                case "ArrowDown":
+                case "S":
+                case "s":
                     this.moveDownL = true;
                     break;
             }
@@ -83,17 +102,17 @@ export class Paddle {
             switch (e.key) {
                 case "w":
                 case "W":
-                    this.moveUpR = false;
+                    this.moveUpL = false;
                     break;
                 case "s":
                 case "S":
-                    this.moveDownR = false;
+                    this.moveDownL = false;
                     break;
                 case "ArrowUp":
-                    this.moveUpL = false;
+                    this.moveUpR = false;
                     break;
                 case "ArrowDown":
-                    this.moveDownL = false;
+                    this.moveDownR = false;
                     break;
             }
         });

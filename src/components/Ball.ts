@@ -17,9 +17,14 @@ export class Ball {
 
   }
 
+
+  public display(): void
+  {
+    console.log("Ball :",this.mesh!.position );
+  }
   public update(): void
   {
-        this.mesh.position.addInPlace(this.ballSpeed)
+      //  this.mesh.position.addInPlace(this.ballSpeed)
   }
 }
 

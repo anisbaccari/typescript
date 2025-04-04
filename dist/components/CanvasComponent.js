@@ -6,6 +6,7 @@ export class CanvasComponent {
         this.canvas = document.createElement("canvas");
         this.canvas.style.width = "100vw";
         this.canvas.style.height = "100%";
+        // Add the object to the page 
         (_a = document.getElementById(containerId)) === null || _a === void 0 ? void 0 : _a.appendChild(this.canvas);
         this.engine = new BABYLON.Engine(this.canvas, true);
         this.scene = new BABYLON.Scene(this.engine);

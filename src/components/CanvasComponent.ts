@@ -20,6 +20,7 @@ export class CanvasComponent {
     this.canvas = document.createElement("canvas");
     this.canvas.style.width = "100vw";
     this.canvas.style.height = "100%";
+    // Add the object to the page 
     document.getElementById(containerId)?.appendChild(this.canvas);
 
     this.engine = new BABYLON.Engine(this.canvas, true);
@@ -50,17 +51,21 @@ export class CanvasComponent {
 
         if (event.key === "i")
             this.pong.display();
-        if (event.key === "p") { // Press 'p' to pause/unpause
+        if (event.key === "p") 
+        { // Press 'p' to pause/unpause
             this.isRendering = !this.isRendering;
             console.log(this.isRendering ? "Rendering resumed!" : "Rendering paused!");
 
-            if (this.isRendering) {
+            if (this.isRendering)
+            {
                 // Resume the render loop
-                this.engine.runRenderLoop(() => {
+                this.engine.runRenderLoop(() => 
+                {
                     this.pong.update(); // Update paddles' movement based on key states
                     this.scene.render();
                 });
-            } else {
+            }
+             else{
                 // Stop the render loop
                 this.engine.stopRenderLoop();
             }
@@ -69,7 +74,8 @@ export class CanvasComponent {
 
     // Start the render loop initially
     if (this.isRendering) {
-        this.engine.runRenderLoop(() => {
+        this.engine.runRenderLoop(() =>
+        {
             this.pong.update(); // Update paddles' movement based on key states
             this.scene.render();
         });
